@@ -1,0 +1,32 @@
+
+Performant solution for FlourPacker - Eddie
+
+To better understand this, let's look at 2 scenarios.
+
+1.  Pretend that we have the scenario where you have 0 bigCount and you must have enough smallCount to fill the order. So in one end of the range, you have goal <= smallCount.
+
+2.  But on the other end of the range, you have x number of bigCount filling part of the order so smallCount only need to cover the remainder of goal divided by 5. Remember, smallCount in the second scenario is smaller than smallCount if bigCount didn't help fill the order in the first scenario!
+
+So worse case scenario, you only need to be concerned about the end of the range where minimum amount of smallCount (i.e. second scenario where some bigCount is covering part of the order) is needed in any scenario...so goal%5 <= smallCount.
+
+
+
+If that still doesn't make sense, let me explain it in another way.  After eliminating with the validation and total is less than goal, that leaves us with figuring out how to determine if we have enough flour bags for the goal since the total is greater or equal to the goal. Since the instructions says that only full bags are used toward the goal amount, we can divide the full amount by 5 and see how many bags remains and whether we have enough smallCount to fill that goal. If the remainder is 0 or more, then we just need to make sure that the smallCount is greater than or equal to that remainder and return the answer true. The use of modulus does exactly that. When you perform goal%5 using the modulus %, you get the remainder as it's value. It's the equivalent of goal/5=(number times divisible + remainder), but modulus will only return the remainder. Keep in mind that it doesn't matter how many times the goal divides by 5 for the largeCount, since only the remainder matters. For example, if you have canPack(2, 0, 10) where you have 2 largeCount, 0 smallCount, and goal of 10, then 2 largeCount is equal to 10 bags of flour and we expect the answer to return true since the goal is 10 bags of flour. If we divide the goal of 10 by 5, we get 2 and a remainder of 0 and expects to return boolean true. Since the goal was divisible by 5, we only care about the remainder and whether smallCount was greater than or equal to 0. Hence, return (smallCount>=goal%5); which translate to...if the condition is true where smallCount is greater than or equal to the remainder of dividing the goal by 5 (i.e. goal%5 and not goal/5), then return boolean true, otherwise return boolean false.
+
+Ideally, we group the #2 and #3 test conditions together.  So this is the preferred code that is pretty concise but very clear. Note that I had to flip the operator < for the #2 supply and demand code so it's >= so the condition is true.  Then I use the && operator to combine the #2 and #3 conditions together.
+
+public class FlourPacker {
+    public static boolean canPack(int bigCount, int smallCount, int goal){
+        if(bigCount < 0 || smallCount < 0 || goal < 0) {  // #1 validation
+            return false;
+        }
+        return ((bigCount*5 + smallCount >= goal) && (goal%5 <= smallCount)); // #2 and #3 test condition
+    }
+}
+Of course, this can be shortened even more by combining all the validations with the final return statement...but at the expense of readability.
+
+public class FlourPacker {
+    public static boolean canPack(int bigCount, int smallCount, int goal){
+        return ((bigCount >= 0 && smallCount >= 0 && goal > 0) && (goal <= 5*bigCount + smallCount) && (smallCount >= goal%5));
+    }
+}

@@ -1,0 +1,21 @@
+Imagine we gave this function number 2465 as an argument.
+int lastDigit = number % 10; stores the last digit (number 5) in the lastDigit variable.
+number is still 2465
+
+Now we enter the loop:
+
+while (number > 9) {
+number /= 10;
+}
+Loop 1: number is 2465 - it's greater than 9 so we take the last digit off with number /= 10;
+
+Loop 2: number is now 246 - it's greater than 9 so we take the last digit off with number /= 10;
+
+Loop 3: number is now 24 - it's greater than 9 so we take the last digit off with number /= 10;
+Loop 4: number is now 2 - it's not greater than 9 so we exit the loop
+
+2 is the first digit of the number, which we need.
+
+As long as number is greater than 9 that means number has at least 2 digits left and we need to keep looping and take
+the digits off until we are left with number which is less or equal to 9.
+Once number is less or equal to 9, that means we got the first digit of the number.
