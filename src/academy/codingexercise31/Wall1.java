@@ -1,14 +1,16 @@
 package academy.codingexercise31;
 
-public class Wall {
+import academy.codingexercise37.Wall;
+
+public class Wall1 {
     private double width;
     private double height;
 
-    public Wall(){
+    public Wall1(){
 
     }
 
-    public Wall(double width, double height) {
+    public Wall1(double width, double height) {
         this.width = (width<0) ? 0 : width;
         this.height = (height<0) ? 0 : height;
     }
@@ -34,7 +36,7 @@ public class Wall {
     }
 
     public static void main(String[] args) {
-        Wall wall = new Wall(5,4);
+        Wall1 wall = new Wall1(5,4);
         System.out.println("area= " + wall.getArea());
 
         wall.setHeight(-1.5);
